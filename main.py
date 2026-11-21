@@ -121,7 +121,12 @@ def sha256_file(path):
 def run(output_dir):
     os.makedirs(output_dir, exist_ok=True)
     dest = os.path.join(output_dir, "entry.png")
-    shutil.copyfile(ENTRY, dest)
+    tmp = os.path.join(output_dir, ".entry.png.tmp")
+    shutil.copyfile(ENTRY, tmp)
+    if sha256_file(tmp) != sha256_file(ENTRY):
+        os.remove(tmp)
+        raise IOError("entry.png copy failed verification")
+    os.replace(tmp, dest)
     return dest
 
 
