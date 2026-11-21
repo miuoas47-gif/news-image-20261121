@@ -127,6 +127,8 @@ def run(output_dir):
         os.remove(tmp)
         raise IOError("entry.png copy failed verification")
     os.replace(tmp, dest)
+    if sha256_file(dest) != sha256_file(ENTRY):
+        raise IOError("entry.png copy failed verification after rename")
     return dest
 
 
