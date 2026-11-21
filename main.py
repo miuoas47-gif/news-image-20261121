@@ -175,7 +175,8 @@ def check():
         n = os.path.getsize(INDEX)
         if n > MAX_INDEX_BYTES:
             problems.append("index.html is %d bytes, over 2 MB" % n)
-        text = open(INDEX, encoding="utf-8").read()
+        with open(INDEX, encoding="utf-8") as f:
+            text = f.read()
         if "ad.png" not in text:
             problems.append("index.html does not reference ad.png")
         if DAY not in text:
@@ -185,7 +186,8 @@ def check():
     if not os.path.isfile(README):
         problems.append("README.md missing")
     else:
-        text = open(README, encoding="utf-8").read()
+        with open(README, encoding="utf-8") as f:
+            text = f.read()
         if "make.fun/badge/news-image-20261121.svg" not in text:
             problems.append("README.md lacks the make.fun bounty badge")
         if "https://make.fun/bounty/news-image-20261121" not in text:
@@ -195,7 +197,8 @@ def check():
     if not os.path.isfile(LICENSE):
         problems.append("LICENSE missing")
     else:
-        text = open(LICENSE, encoding="utf-8").read()
+        with open(LICENSE, encoding="utf-8") as f:
+            text = f.read()
         if "MIT License" not in text or "Permission is hereby granted" not in text:
             problems.append("LICENSE is not the MIT license text")
 
